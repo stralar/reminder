@@ -1,10 +1,10 @@
 {
-  "user": "username",
+  "user": "username/email",
   "password": "P@ssword",
-  "host": "Mail-Host",
-  "port": 534,
+  "host": "Host-Domain",
+  "port": "Host-Port",
   "receivers": [
     "receiver1@example.de",
-    "receiver1@example.de"
+    "receiver2@example.de"
   ]
 }
