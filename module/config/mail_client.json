@@ -1,8 +1,8 @@
 {
   "user": "username/email",
   "password": "P@ssword",
-  "host": "Host-Domain",
-  "port": "Host-Port",
+  "host": "Host-domain",
+  "port": 465,
   "receivers": [
     "receiver1@example.de",
     "receiver2@example.de"
