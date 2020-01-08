@@ -15,7 +15,7 @@ actual status / logging / save File, so it can run in crontab.\
 Class:
 * Email Client
 * Creating Event File
-* Load Configurations
+* Load/save Configurations
 \
 \
 The Save File will be created from the config Files and the actual status.

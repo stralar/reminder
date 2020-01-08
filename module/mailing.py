@@ -21,24 +21,31 @@ class Mail:
         self.password = data["password"]
         self.host = data["host"]
         self.port = data["port"]
-        self.receivers = data["receivers"]
-
-    def send_without_file(self, msg):
 
         try:
-            # smtplib.SMTP( [host [, port [, local_hostname]]] )
             self.server = smtplib.SMTP_SSL(self.host, self.port)
 
             self.server.ehlo()
             self.server.login(self.user, self.password)
+        except:
+            print("SMTP Client could not start")
+            raise
 
-            self.server.sendmail(self.user, self.receivers, msg)
-            self.server.close()
+    def shutdown_smtp(self):
+        self.server.close()
+
+    def send_without_file(self, msg, receivers):
+
+        try:
+            print("Send mail to: " + str(receivers))
+            self.server.sendmail(self.user, receivers, msg)
             pass
         except:
             e = sys.exc_info()[0]
             print("Unexpected error in email sending: " + str(e))
             raise
+
+
 
 if __name__ == '__main__':
 
