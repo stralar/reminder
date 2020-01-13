@@ -19,3 +19,9 @@ Class:
 \
 \
 The Save File will be created from the config Files and the actual status.
+
+
+
+# Need To Debug
+If the "AttributeError: 'list' object has no attribute 'encode'"\
+appeared from  "text = msg.as_string()", the msg['to'] does not accept lists

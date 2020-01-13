@@ -21,7 +21,7 @@ class Mail:
         with open(os.path.dirname(os.path.abspath(__file__)) + '/config/' + config_File) as json_data_file:
             data = json.load(json_data_file)
 
-        print(data)
+        #print(data)
 
         self.user = data["user"]
         self.password = data["password"]
@@ -52,15 +52,16 @@ class Mail:
             raise
 
 
-    def send_with_file(self, receivers, subject, mainText, file, filename):
+    def send_with_file(self, receivers, subject, mainText, file_att, filename):
 
         msg = MIMEMultipart()
         msg['From'] = self.user
-        msg['To'] = receivers
+        # TODO Fix the mailTO: part, because no list are accepted
+        msg['To'] = "NeedToDebug"
         msg['Subject'] = subject
         msg.attach(MIMEText(mainText, 'plain'))
 
-        attachment = file
+        attachment = file_att
         part = MIMEBase('application', 'octet-stream')
         part.set_payload(attachment)
         encoders.encode_base64(part)
