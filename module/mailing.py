@@ -5,6 +5,12 @@ import json
 import os
 import sys
 
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
+
+
 config_File = "mail_client_real.json"
 #config_File = "mail_client.json"
 
@@ -34,11 +40,39 @@ class Mail:
     def shutdown_smtp(self):
         self.server.close()
 
-    def send_without_file(self, msg, receivers):
+    def send_without_file(self, receivers, subject, mainText):
 
         try:
             print("Send mail to: " + str(receivers))
-            self.server.sendmail(self.user, receivers, msg)
+            self.server.sendmail(self.user, receivers, mainText)
+            pass
+        except:
+            e = sys.exc_info()[0]
+            print("Unexpected error in email sending: " + str(e))
+            raise
+
+
+    def send_with_file(self, receivers, subject, mainText, file, filename):
+
+        msg = MIMEMultipart()
+        msg['From'] = self.user
+        msg['To'] = receivers
+        msg['Subject'] = subject
+        msg.attach(MIMEText(mainText, 'plain'))
+
+        attachment = file
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(attachment)
+        encoders.encode_base64(part)
+        part.add_header('Content-Disposition', "attachment; filename=" + str(filename) + ".ics")
+
+        msg.attach(part)
+
+        text = msg.as_string()
+
+        try:
+            print("Send mail to: " + str(receivers))
+            self.server.sendmail(self.user, receivers, text)
             pass
         except:
             e = sys.exc_info()[0]

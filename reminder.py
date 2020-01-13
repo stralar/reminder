@@ -5,8 +5,13 @@ import os
 import datetime
 import json
 import module.mailing as mail
+from module.event import Event
 import random
+import module.event as event
 from copy import copy
+
+
+
 
 events_file_name = "events_real.json"
 configs_path = "/module/config/"
@@ -62,6 +67,7 @@ def _Save():
 def _Send_event_notification():
     global save
     global events
+    global msg
 
     for i in range(len(events["events"])):
 
@@ -105,8 +111,13 @@ def _Send_event_notification():
                 random_email = events["receivers"]
                 pass
 
-            #mail_client.send_without_file(events[i]["text"])
+            #mail_client.send_without_file(random_email, "Send_event_notification", events[i]["text"])
+            tmpEvent = Event(events["events"][i]["summary"], events["events"][i]["description"], events["events"][i]["duration-in-days"])
+            mail_client.send_with_file(random_email, events["events"][i]["mail-subject"], events["events"][i]["mail-text"], tmpEvent.get_ical(),  "Putzdienst")
+
             print(random_email)
+
+
 
 
 if __name__ == '__main__':
